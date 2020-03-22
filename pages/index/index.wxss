@@ -1,0 +1,41 @@
+page{
+  padding: 5rpx;
+}
+
+.slider{
+  margin-top: 10rpx;
+}
+.menu_wrap{
+  flex-wrap: wrap;
+  margin-top: 10rpx;
+  border: 1px solid red;
+}
+.food_wrap{
+  width: 50%;
+  display: inline-block;
+  padding: 10rpx;
+  margin-top: 10rpx;
+}
+.foodCount{
+  display: flex;
+}
+.reduce,.plus{
+  display: flex;
+  flex: 1;
+}
+.foodNum{
+  display: flex;
+  flex: 3;
+}
+.food_wrap image{
+  width: 320rpx;
+}
+.foodPrice,.foodName{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirm_wrap{
+  margin-top: 10rpx;
+}
+

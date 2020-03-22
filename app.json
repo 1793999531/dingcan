@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+   
+   
+    "pages/cart/cart"
+    
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "霸王餐馆",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "",
+    "selectedColor": "",
+    "backgroundColor": "",
+    "position": "bottom",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "icons/icon_index.jpg",
+        "selectedIconPath": "icons/icon_index.jpg"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
+        "iconPath": "icons/icon_cart.jpg",
+        "selectedIconPath": "icons/icon_cart.jpg"
+      },
+      {
+        "pagePath": "pages/login/login",
+        "text": "用户",
+        "iconPath": "icons/icon_login.jpg",
+        "selectedIconPath": "icons/icon_login.jpg"
+      }
+    ]
+  },
+  
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

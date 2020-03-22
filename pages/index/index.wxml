@@ -1,0 +1,49 @@
+<!-- 菜单轮播图 -->
+<view class="slider">
+  <swiper autoplay indicator-dots circular>
+    <swiper-item class="swiper_item" item-id="" wx:for="{{swiperList}}" wx:key="id">
+      <image class="" src="{{item.imgSrc}}" data-item="{{item.name}}" mode="widthFix">
+      </image>
+
+    </swiper-item>
+  </swiper>
+</view>
+
+<!--菜品详细信息-->
+<view class="menu_wrap">
+  <view class="food_wrap" wx:for="{{swiperList}}" wx:key="id">
+
+    <view class="image_wrap">
+      <image class="" src="{{item.imgSrc}}" mode="widthFix"></image>
+    </view>
+    <view class="foodInfo">
+      <view class="foodName">
+        {{item.name}}
+      </view>
+      <view class="foodPrice">
+        价格：{{item.price}}
+      </view>
+    </view>
+
+    <view class="foodCount">
+      <button bindtap="reduce" data-index="{{index}}" class="reduce" size="mini">-</button>
+      <input class="foodNum" data-foodNum="{{foodNum}}" style="width: 40px;" value="{{foodNum[index].foodNum}}" />
+      <button bindtap="plus" data-index="{{index}}" class="plus" size="mini">+</button>
+    </view>
+  </view>
+
+</view>
+<button bindtap = "submitOrder">submit</button>
+<!--确定订单按钮-->
+<view class="confirm_wrap">
+  <navigator class="" target="" url="../cart/cart" hover-class="navigator-hover" open-type="switchTab">
+    <button bindtap = "submitOrder">确定订单</button>
+  </navigator>
+</view>
+
+<!--版本信息-->
+<view class="copyright">
+  <text class="cr" selectable="false" space="false" decode="false">
+    @copyrightHXZ
+  </text>
+</view>

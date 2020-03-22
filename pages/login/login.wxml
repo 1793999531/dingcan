@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 微信登陆 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">用户名：{{userInfo.nickName}}</text> 
+    </block>  
+  </view>
+  <view class="userInfo_wrap">
+     <view class="address">我的地址:<input bindblur="getAddress" value="{{userAddress}}" disabled="{{modifyDataAble}}"></input></view>
+    <view>我的电话:<input bindblur="getPhone" value="{{userPhone}}" maxlength="11" disabled="{{modifyDataAble}}"></input></view>
+  </view>
+</view>
+<button  bindtap = "modifyData" data-item="{{userAddress}}"> {{modifyDataButText}} </button>
+<button  bindtap = "getMongoData"> get </button>
