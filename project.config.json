@@ -7,6 +7,7 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
@@ -20,11 +21,13 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.3",
-	"appid": "wxb4c3de8522a8263d",
+	"appid": "wx66437a88c7d25c83",
 	"projectname": "protect1",
 	"debugOptions": {
 		"hidedInDevtools": []

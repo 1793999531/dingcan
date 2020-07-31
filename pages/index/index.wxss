@@ -8,7 +8,6 @@ page{
 .menu_wrap{
   flex-wrap: wrap;
   margin-top: 10rpx;
-  border: 1px solid red;
 }
 .food_wrap{
   width: 50%;

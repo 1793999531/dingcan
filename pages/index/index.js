@@ -1,6 +1,7 @@
 //获取应用实例
 const app = getApp()
 import regeneratorRuntime from '../../utils/runtime.js'
+let common = require("../../libs/api.js")
 Page({
 
   /**
@@ -10,10 +11,13 @@ Page({
     swiperList: [],
     foodNum: [],
     userInfo: "",
-    foodSelectRecord:[],
-    orderUrl:'http://49.235.96.23:5000?coll=wxDB&doc=order',
-    orderFlagUrl:'http://49.235.96.23:5000?coll=wxDB&doc=orderFlag',
-    usersUrl:'http://49.235.96.23:5000?coll=wxDB&doc=users'
+    foodSelectRecord: [],
+    orderUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=order',
+    orderFlagUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=orderFlag',
+    usersUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=users',
+    total:0,
+    foodSequenceFlag:0, //食物顺序标记
+    condition:false
   },
   //减少菜品数量
   reduce: function (e) {
@@ -29,13 +33,13 @@ Page({
 
   //增加菜品数量
   plus: function (e) {
-    console.log("plus")
-    
+    //console.log("plus")
+
     let that = this;
     let curIndex = e.currentTarget.dataset.index
-    console.log(that.data.foodNum)
-    console.log(curIndex)
-    console.log(that.data.foodNum[1].foodNum + 1)
+    // console.log(that.data.foodNum)
+    // console.log(curIndex)
+    // console.log(that.data.foodNum[1].foodNum + 1)
     let arrIndex = "foodNum[" + curIndex + "].foodNum"
     that.setData({
       [arrIndex]: that.data.foodNum[curIndex].foodNum + 1
@@ -43,182 +47,135 @@ Page({
   },
   //获得轮播图列表
   getSwiperList: function () {
-    
     wx.request({
-      url: "http://www.lpllfd.cn/test/swiperList.json",
+      url: "http://49.235.96.23:5000?coll=dingcanDB&doc=menu",
       success: (res) => {
+        console.log(this.data.foodNum)
         console.log("获得轮播图列表")
         let that = this;
-        let swiperList = res.data.swiperList
-        let len = res.data.swiperList.length
-        console.log(len)
+       let swiperList = res.data
+        let len = res.data.length
+       // console.log(len)
+        console.log("aaaaaaaaaaaaaa")
+        console.log(res.data)
         if (len != 0) {
           if (res.statusCode == 200) {
             that.setData({
-              swiperList: res.data.swiperList
+              swiperList: swiperList
             })
           }
-          for(var i=0;i<len;i++){
+          for (var i = 0; i < len; i++) {
             var temp = {
               id: swiperList[i].id,
-              imgSrc: swiperList[i].imgSrc,
+              imgSrc:swiperList[i].img,
               name: swiperList[i].name,
-              price: swiperList[i].price,
+              price: swiperList[i].Price,
               foodNum: null,
-              userName:this.data.userInfo.nickName
+              userName: this.data.userInfo.nickName,
+              foodSequenceFlag:this.data.foodSequenceFlag+1
             }
             this.data.foodNum.push(temp)
           }
-          console.log(this.data.foodNum)
+          
         }
         console.log("获得轮播图列表结束")
       }
     })
-    
-  },
-  getFoodNum: function(){
-    wx.request({
-      url: this.data.orderUrl+'&userName='+this.data.userInfo.nickName,
-      success: (res) => {
-        console.log("获得食物数量信息")
-        console.log('getFoodNum:'+this.data.userInfo.nickName)
-        console.log(res)
-        let that = this;
 
-        let len = res.data.length
-        console.log(len)
-        if (len != 0) {
-         
-          for (var i = 0; i < len; i++) {
-            let selectedFoodId=res.data[i].id //已选择购买的食物id
-            let arrIndex = "foodNum[" + (selectedFoodId-1) + "].foodNum"
-            that.setData({
-              [arrIndex]:res.data[i].foodNum
-            })
-          }
+  },
+  getFoodNum: function () {
+    let that = this;
+    let foodNum = common.wxRequest("get", this.data.orderUrl + '&userName=' + this.data.userInfo.nickName, null)
+    foodNum.then(function (res) {
+      console.log("获得食物数量信息")
+      console.log(res)
+      let len = res.data.length
+      let temp = that.data.foodNum
+        for(var i=0;i<temp.length;i++){
+          let temp2 = "foodNum[" + i + "].foodNum"
+          that.setData({
+            [temp2]:null
+          })
         }
-        console.log(this.data.foodNum)
-        console.log("获得食物数量结束")
+      if (len != 0) {
+        
+        for (var i = 0; i < len; i++) {
+          let selectedFoodId = res.data[i].id //已选择购买的食物id
+          let arrIndex = "foodNum[" + (selectedFoodId - 1) + "].foodNum"
+          that.setData({
+            [arrIndex]: res.data[i].foodNum
+          })
+        }
       }
+      console.log(that.data.foodNum)
+      console.log("获得食物数量结束")
     })
   },
   submitOrder: function () {
-    var userName=this.data.userInfo.nickName
+    let that = this;
+    var userName = this.data.userInfo.nickName
     console.log("submit")
     let swiperList = this.data.swiperList
+    console.log(swiperList)
     let userNameData = {
-       "userName": userName
+      "userName": userName
     }
-    this.wxRequest("post",this.data.orderFlagUrl+'&userName='+userName,userNameData)
-    // wx.request({
-    //   url: this.data.orderFlagUrl+'&username='+userName,
-    //   method: "POST",
-    //   header: {'content-type':'application/json'},
-    //   dataType: 'json',
-    //   responseType: 'text',
-    //   data: userNameData,
-    //   success: (res) => {
-    //     console.log('success')
-    //   },
-    //   error:(res)=>{
-    //     console.log(res)
-    //   }
-      
-    // })
+    common.wxRequest("post", this.data.orderFlagUrl + '&userName=' + userName, userNameData)
     for (var i = 0; i < swiperList.length; i++) {
-      let curFoodNum =this.data.foodNum[i].foodNum//当前菜品是否已选择购买数量
-      console.log(i+":"+curFoodNum)
-      if (curFoodNum!=null) {
+      let curFoodNum = this.data.foodNum[i].foodNum//当前菜品是否已选择购买数量
+      console.log(i + ":" + curFoodNum)
+      
+      if (curFoodNum != null &&curFoodNum!=0) {
+        console.log("common:"+app.globalData.total)
+        app.globalData.total+=swiperList[i].price*curFoodNum
         //查询菜品是否已存在
 
         var foodData = {
           id: swiperList[i].id,
-          imgSrc: swiperList[i].imgSrc,
+          imgSrc:"http://www.lpllfd.cn/hxz/"+ swiperList[i].img,
           name: swiperList[i].name,
-          price: swiperList[i].price,
+          price: swiperList[i].Price,
           foodNum: curFoodNum,
-          userName:this.data.userInfo.nickName
+          userName: this.data.userInfo.nickName
         }
-        this.wxRequest("post",this.data.orderUrl+'&userName='+userName,foodData)
-        // wx.request({
-        //   url: 'http://49.235.96.23:4000?coll=wxDB&doc=order&username='+this.data.userInfo.nickName,
-        //   method: "POST",
-        //   header: {'content-type':'application/json'},
-        //   dataType: 'json',
-        //   responseType: 'text',
-        //   data: foodData,
-        //   success: (res) => {
-        //     console.log('success')
-        //   }
-        // })
-      }else if(curFoodNum==0){//查询菜品是否已存在
-        //存在就删除
-        this.wxRequest("delete",this.data.orderUrl+'&id='+swiperList[i].id,null)
-        // wx.request({
-        //   url: orderUrl+"&id="+swiperList[i].id,
-        //   method: "delete",
-        //   responseType: 'text',
-          
-        //   success: (data) => {
-        //     console.log('delete')
-            
-        //   }
-        // })
-        //this.wxRequest("delete",orderUrl+"&id="+swiperList[i].id)
-        console.log('delete')
+        console.log(foodData)
+        common.wxRequest("post", this.data.orderUrl + '&userName=' + userName+"&id="+swiperList[i].id, foodData,function(res){
+          console.log(res)
+        })
+
+      } else if (curFoodNum == 0) {//查询菜品是否已存在,存在就删除
+        common.wxRequest("delete",this.data.orderUrl+'&userName=' + userName+"&id="+swiperList[i].id,null,function(){
+          console.log('delete')
+        })
       }
     }
-    
-  },
-  //wx.request function
-  wxRequest: function(method,url,data,callback){
-    return new Promise(function(resolve,reject){
-      wx.request({
-      url: url,
-      method: method,
-      header: {'content-type':'application/json'},
-      dataType: 'json',
-      data:data,
-      responseType: 'text',
+    wx.showToast({
+      title: '添加成功',
+      duration: 1500,
+    });
 
-      success: (data) => {
-      //data2=data
-      console.log("----------a")
-        console.log(data)
-        if(callback!=null){
-          callback()
-        }
-        resolve(data)
-      }
-    })
-  })
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad:async function (options) {
+  onLoad: async function (options) {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
       })
       console.log(this.data.userInfo)
       this.getFoodNum()
-    }else{
-      app.userInfoReadyCallback = res =>{
+    } else {
+      app.userInfoReadyCallback = res => {
         this.setData({
           userInfo: app.globalData.userInfo,
         })
-        console.log('222')
-        console.log(this.data.userInfo)
+        console.log('callback')
         this.getFoodNum()
       }
     }
     this.getSwiperList()
-    let tt=await this.wxRequest("get",'http://49.235.96.23:4000?coll=wxDB&doc=order&userName='+this.data.userInfo.nickName,null)
-    
-    console.log(tt)
-    console.log(this.data.userInfo+"------aaa")
-    
+
   },
 
   /**
@@ -232,7 +189,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getFoodNum();
+    let that = this
+      that.setData({
+        condition:true
+      })
   },
 
   /**

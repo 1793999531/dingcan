@@ -1,1 +1,42 @@
-/* pages/cart/cart.wxss */
+page{
+  padding: 5rpx;
+}
+
+.title{
+    font-size: 55rpx;
+    height: 120rpx;
+    background-color: #6aa;
+}
+.food_wrap{
+    margin-top: 30rpx;
+    display: flex;
+}
+.title,.foodId,.foodImg,.foodName,.foodPrice,.foodNum,.delBut_wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.food_wrap>.foodImg{
+    flex: 4;
+    height: 100rpx;
+    border-radius: 100rpx;
+}
+.food_wrap>.foodId{
+    flex: 1;
+}
+.food_wrap>.foodName{
+    flex: 2;
+}
+.food_wrap>.foodPrice{
+    flex: 2;
+}
+.food_wrap>.foodNum{
+    flex: 2;
+}
+.food_wrap>.delBut_wrap{
+    flex: 2;
+}
+.footer_wrap{
+    display: flex;
+    margin-top: 30rpx;
+}

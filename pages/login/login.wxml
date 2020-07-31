@@ -12,5 +12,5 @@
     <view>我的电话:<input bindblur="getPhone" value="{{userPhone}}" maxlength="11" disabled="{{modifyDataAble}}"></input></view>
   </view>
 </view>
-<button  bindtap = "modifyData" data-item="{{userAddress}}"> {{modifyDataButText}} </button>
-<button  bindtap = "getMongoData"> get </button>
+<button wx:if="{{modifyDataButText=='确定'}}" bindtap = "getLocation">定位</button>
+<button  bindtap = "modifyData" data-item="{{userAddress}}" style="margin-top: 20rpx;"> {{modifyDataButText}} </button>
