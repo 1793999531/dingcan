@@ -2,7 +2,7 @@
 <view class="slider">
   <swiper autoplay indicator-dots circular>
     <swiper-item class="swiper_item" item-id="" wx:for="{{swiperList}}" wx:key="id">
-      <image class="" src="http://www.lpllfd.cn/hxz/{{item.img}}" data-item="{{item.name}}" mode="widthFix">
+      <image class="" src="https://www.lpllfd.cn/static/dingcan/{{item.img}}" data-item="{{item.name}}" mode="widthFix">
       </image>
 
     </swiper-item>
@@ -14,7 +14,7 @@
   <view class="food_wrap" wx:for="{{swiperList}}" wx:key="id">
 
     <view class="image_wrap">
-      <image class="" src="http://www.lpllfd.cn/hxz/{{item.img}}" mode="widthFix"></image>
+      <image class="" src="https://www.lpllfd.cn/static/dingcan/{{item.img}}" mode="widthFix"></image>
     </view>
     <view class="foodInfo">
       <view class="foodName">

@@ -1,15 +1,13 @@
 //index.js
 //获取应用实例
 const app = getApp()
-let common = require("../../libs/api.js")
+var common = require("../../libs/api.js")
 import regeneratorRuntime from '../../utils/runtime.js'
 var QQMapWX = require('../../libs/qqmap-wx-jssdk.js');
 var qqmapsdk;
 Page({
   data: {
-    orderUrl:'http://49.235.96.23:5000?coll=wxDB&doc=order',
-    orderFlagUrl:'http://49.235.96.23:5000?coll=wxDB&doc=orderFlag',
-    usersUrl:'http://49.235.96.23:5000?coll=wxDB&doc=users',
+    usersUrl: 'https://www.lpllfd.cn/dingcan?coll=wxDB&doc=users',
     modifyDataAble:true,
     modifyDataButText:'点击编辑资料',
     userAddress: '',
@@ -100,7 +98,6 @@ Page({
       })
       console.log(this.data.userInfo.nickName)
     } else if (this.data.canIUse) {
-      console.log('222')
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -181,9 +178,10 @@ Page({
   getMongoData: function(){
     let that = this
     //获取当前登录的用户信息
+    console.log(this.data.usersUrl,'--------a')
     let curUserInfo=common.wxRequest("get",this.data.usersUrl+'&userName='+this.data.userInfo.nickName,null)
     console.log(typeof(curUserInfo))
-    console.log(curUserInfo)
+    console.log('--------')
     curUserInfo.then(function(obj){
       console.log(obj)
       console.log(obj.data.length)

@@ -12,9 +12,9 @@ Page({
     foodNum: [],
     userInfo: "",
     foodSelectRecord: [],
-    orderUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=order',
-    orderFlagUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=orderFlag',
-    usersUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=users',
+    orderUrl: 'https://www.lpllfd.cn/dingcan?coll=wxDB&doc=order',
+    orderFlagUrl: 'https://www.lpllfd.cn/dingcan?coll=wxDB&doc=orderFlag',
+    usersUrl: 'https://www.lpllfd.cn/dingcan?coll=wxDB&doc=users',
     total:0,
     foodSequenceFlag:0, //食物顺序标记
     condition:false
@@ -48,7 +48,7 @@ Page({
   //获得轮播图列表
   getSwiperList: function () {
     wx.request({
-      url: "http://49.235.96.23:5000?coll=dingcanDB&doc=menu",
+      url: "https://www.lpllfd.cn/dingcan?coll=dingcanDB&doc=menu",
       success: (res) => {
         console.log(this.data.foodNum)
         console.log("获得轮播图列表")
@@ -132,7 +132,7 @@ Page({
 
         var foodData = {
           id: swiperList[i].id,
-          imgSrc:"http://www.lpllfd.cn/hxz/"+ swiperList[i].img,
+          imgSrc:"https://www.lpllfd.cn/static/dingcan/"+ swiperList[i].img,
           name: swiperList[i].name,
           price: swiperList[i].Price,
           foodNum: curFoodNum,

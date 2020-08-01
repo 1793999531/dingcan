@@ -12,9 +12,9 @@ Page({
     userInfo: "",
     URInfo: "",//用户注册时的信息
     userFoodInfo: [],
-    orderUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=order',
-    orderFlagUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=orderFlag',
-    usersUrl: 'http://49.235.96.23:5000?coll=wxDB&doc=users'
+    orderUrl: 'https://www.lpllfd.cn/dingcan?coll=wxDB&doc=order',
+    orderFlagUrl: 'https://www.lpllfd.cn/dingcan?coll=wxDB&doc=orderFlag',
+    usersUrl: 'https://www.lpllfd.cn/dingcan?coll=wxDB&doc=users',
   },
   //删除菜品函数
   del: function (e) {
